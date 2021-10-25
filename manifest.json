@@ -1,0 +1,16 @@
+{
+    "name": "Todo App",
+    "short_name": "Todo",
+    "start_url": "/?utm_source=web_app_manifest",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#fff",
+    "theme_color": "#0aa574",
+    "icons": [
+      {
+        "src": "https://xxxx.com/xxxx/launcher-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ]
+  }
