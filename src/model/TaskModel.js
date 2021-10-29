@@ -1,20 +1,30 @@
-import { EventEmitter } from "../EventEmitter.js";
 import {LocalForageModel} from "./LocalForageModel.js";
 
-export class TaskListModel extends EventEmitter {
+export class TaskModel {
   /**
    * 
-   * @param {TaskListItem[]} items 
+   * @param {TaskItem[]} items 
    * @param {localforage} localforage 
    * localforage[] = {title : string, completed : boolean}
    */
   constructor(items = []) {
-    super();
+    // super();
     this.items = items;
+    this.onChanges = [];
     this.l = new LocalForageModel();
+
     items = this.l.toTaskList();
     console.log('tasklistmodel items is ' + items);
   }
+
+  subscribe(onChange){
+    this.onChanges.push(onChange);
+  }
+
+  inform() {
+//		Utils.store(this.key, this.items);
+		this.onChanges.forEach(function (cb) { cb(); });
+	};
 
   getTotalCount() {
     return this.items.length;
@@ -30,6 +40,7 @@ export class TaskListModel extends EventEmitter {
    */
   onChange(listener) {
     this.addEventListener("change", listener);
+
   }
 
   /**
@@ -41,12 +52,13 @@ export class TaskListModel extends EventEmitter {
 
   /**
    * TaskItemを追加する
-   * @param {TaskItemModel} taskItem
+   * @param {TaskItem} taskItem
    */
   addTask(taskItem) {
     this.items.push(taskItem);
     this.l.add(taskItem);
-    this.emitChange();
+//    this.emitChange();
+    this.inform();
   }
   /**
    * 指定したidのTaskItemのcompletedを更新する
@@ -60,8 +72,8 @@ export class TaskListModel extends EventEmitter {
     }
     taskItem.completed = completed;
     this.l.update(`${id}`, completed);
-
-    this.emitChange();
+    this.inform();
+//    this.emitChange();
   }
 
   /**
@@ -74,7 +86,8 @@ export class TaskListModel extends EventEmitter {
       return task.id !== id;
     });
     this.l.delete(`${id}`);
-
+    this.inform();
     this.emitChange();
   }
 }
+

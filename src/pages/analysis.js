@@ -4,6 +4,7 @@ import One from './one.js';
 
 class Analysis extends React.Component{
     render(){
+        console.log("now display analysis");
         return (
             <div>
                 test_two<br/>

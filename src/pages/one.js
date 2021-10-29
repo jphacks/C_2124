@@ -5,6 +5,9 @@ import Analysis from './analysis';
 
 class One extends React.Component{
     render(){
+
+      console.log("now display one");
+
         return (
             <div className="container ">
               <form id="js-form">

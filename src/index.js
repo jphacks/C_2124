@@ -2,14 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { TaskItem } from './model/TaskItem';
+import { TaskModel } from './model/TaskModel';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('taskapp')
-);
+export const model = new TaskModel();
 
+(function () {
+  function render() {
+    ReactDOM.render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
+      document.getElementById('taskapp')
+    );  
+  }
+  
+  model.subscribe(render);  
+  render();
+})();
 
 reportWebVitals();

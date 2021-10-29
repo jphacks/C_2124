@@ -1,4 +1,4 @@
-import { TaskItemModel } from "./TaskItemModel.js";
+import { TaskItem } from "./TaskItem.js";
 import localforage from "../localforage/dist/localforage";
 
 /* global localforage */
@@ -55,7 +55,7 @@ export class LocalForageModel {
       const value = localforage.getItem(key);
       console.log(value, key);
       if (value) {
-        items.push(new TaskItemModel(value));
+        items.push(new TaskItem(value));
       }
     }
 

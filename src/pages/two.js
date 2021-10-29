@@ -4,6 +4,7 @@ import One from './one.js';
 
 class Two extends React.Component{
     render(){
+        console.log("now display two");
         return (
             <div>
                 test_two<br/>
