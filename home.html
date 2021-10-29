@@ -12,10 +12,10 @@
     <header>今日の進捗</header>
     <script class="pie chart">
     // 1. データの準備
-    var achieved = 1;
-    var not_achieved = 3;
-    var achieved_p = achieved/(achieved+not_achieved)*100;
-    var not_achieved_p = not_achieved/(achieved+not_achieved)*100;
+    var achieved = 10;
+    var not_achieved = 2;
+    var achieved_p = Math.floor(achieved/(achieved+not_achieved)*100);
+    var not_achieved_p = Math.floor(not_achieved/(achieved+not_achieved)*100);
     var dataset = [
         {"value": achieved_p},//達成した数
         {"value": not_achieved_p}//達成していない数
@@ -31,7 +31,7 @@
     g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     
     // 3. カラーの設定
-    var color_array = ["#4d4398","#003f8e","#00a1e9","#2cb4ad","#3cb37a","#d1de4c","#ffdc00","#f39800","#ed6d35","#ea5550"];
+    var color_array = ["#4d4398","#003f8e","#00a1e9","#2cb4ad","#3cb37a","#d1de4c","#ffdc00","#f39800","#ed6d35","#ea5550","#FF0000"];
     var color = d3.scaleOrdinal()
         .range([color_array[Math.floor(dataset[0].value / 10)], "#777777"]);
     
