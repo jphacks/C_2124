@@ -6,19 +6,19 @@ import Analysis from './analysis';
 class One extends React.Component{
     render(){
         return (
-            <div class="container ">
+            <div className="container ">
               <form id="js-form">
                 <input
                   id="js-form-input"
-                  class="new-task"
+                  className="new-task"
                   type="text"
                   placeholder="What need to be done?"
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </form>
-              <div id="js-task-list" class="task-list">
+              <div id="js-task-list" className="task-list">
               </div>
-              <footer class="footer">
+              <footer className="footer">
                 <span id="js-task-count">Todoアイテム数: 0</span>
               </footer>
                 test_one<br/>
