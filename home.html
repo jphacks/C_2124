@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="utf-8">
+    <title>home</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <link rel="stylesheet" href="home_style.css">
+</head>
+ 
+<body>
+    <header>今日の進捗</header>
+    <script class="pie chart">
+    // 1. データの準備
+    var achieved = 1;
+    var not_achieved = 3;
+    var achieved_p = achieved/(achieved+not_achieved)*100;
+    var not_achieved_p = not_achieved/(achieved+not_achieved)*100;
+    var dataset = [
+        {"value": achieved_p},//達成した数
+        {"value": not_achieved_p}//達成していない数
+    ]
+    
+    var width = 800; // グラフの幅
+    var height = 800; // グラフの高さ
+    var radius = Math.min(width, height) / 2 - 10;//グラフの半径
+    
+    // 2. SVG領域の設定//円の中心の移動
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+    
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    
+    // 3. カラーの設定
+    var color_array = ["#4d4398","#003f8e","#00a1e9","#2cb4ad","#3cb37a","#d1de4c","#ffdc00","#f39800","#ed6d35","#ea5550"];
+    var color = d3.scaleOrdinal()
+        .range([color_array[Math.floor(dataset[0].value / 10)], "#777777"]);
+    
+    // 4. pieチャートデータセット用関数の設定
+    var pie = d3.pie()
+        .value(function(d) { return d.value; })
+        .sort(null);
+    
+    // 5. pieチャートSVG要素の設定
+    var pieGroup = g.selectAll(".pie")
+        .data(pie(dataset))
+        .enter()
+        .append("g")
+        .attr("class", "pie");
+    
+    arc = d3.arc()
+        .outerRadius(radius)
+        .innerRadius(180);//ここで円をドーナツ型にする
+    
+    pieGroup.append("path")
+        .attr("d", arc)
+        .attr("fill", function(d) { return color(d.index) })
+        .attr("opacity", 0.75)
+        .attr("stroke", "white");
+    
+    // 6. pieチャートテキストSVG要素の設定
+    var text = d3.arc()
+        .outerRadius(radius - 30)
+        .innerRadius(radius - 30);
+    
+    pieGroup.append('text')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('font-size',100)
+        .attr('text-anchor', "middle")
+        .attr('dominant-baseline',"middle")
+        .text(function(d) {return achieved_p+"%";});
+    </script>
+</body>
+ 
+</html>
