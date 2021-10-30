@@ -26,8 +26,9 @@ class Analysis extends React.Component{
         }
 
         return (
-            <div>
-                {/* <LineChart  data={dataset} /> */}
+            <div class="barchart">
+                <h2>React D3.js line chart</h2>
+                <LineChart  dataset={dataset} />
             </div>
         )
     }
