@@ -32,7 +32,7 @@
     { "date": "211011", "a_percentage": 14, "b_percentage": 90, "c_percentage": 0 },
     { "date": "211012", "a_percentage": 9, "b_percentage": 80, "c_percentage": 10 },
     ]
-    //データの成形
+    //データの成形(直近10件表示(一番左または月初の場合は月も表示))
     var dataset = []
     for (let step = Math.max(0,input_dataset.length-10); step < input_dataset.length; step++) {
         var data = input_dataset[step]
