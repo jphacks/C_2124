@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import { TaskItem } from './model/TaskItem';
 import { TaskModel } from './model/TaskModel';
 import reportWebVitals from './reportWebVitals';
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Link } from 'react-router-dom';
 import One from './pages/one.js';
 import Two from './pages/two.js';
 import Analysis from './pages/analysis.js';
 
-import { render } from "./view/html-util.js";
-import { TaskListView } from "./view/TaskListView.js";
+// import { render } from "./view/html-util.js";
+// import { TaskListView } from "./view/TaskListView.js";
 import { TaskItem } from "./model/TaskItem.js";
 import { TaskModel } from "./model/TaskModel.js";
 
@@ -15,17 +15,27 @@ export class App extends React.Component{
 
   constructor(localforage) {
     super();
-      this.taskListView = new TaskListView();
-      this.taskListModel = new TaskModel([], localforage);
+//      this.taskListView = new TaskListView();
+      this.model = new TaskModel([], localforage);
       this.onChanges = [];
+      this.setState = this.setState.bind(this);
+      this.state = {
+        editing: null,
+        newTask: ''
+      }
   }
+
+  /*  constructorの後に呼ばれる */
+//   componentDidMount() {
+//    setState = this.setState;
+//   }
 
   /**
    * Taskを追加するときに呼ばれるリスナー関数
    * @param {string} title
    */
   handleAdd(title) {
-      this.taskListModel.addTask(new TaskItem({ title, completed: false }));
+      this.model.addTask(new TaskItem({ title, completed: false }));
   }
 
   /**
@@ -33,8 +43,16 @@ export class App extends React.Component{
    * @param {{ id:number, completed: boolean }}
    */
   handleUpdate({ id, completed }) {
-      this.taskListModel.updateTask({ id, completed });
+      this.model.updateTask({ id, completed });
       
+  }
+
+  /**
+   * inputに入力された内容を検知するためのリスナー関数
+   */
+  handleChange(event) {
+
+    this.setState({newTask: event.target.value});
   }
 
   handleNewTodoKeyDown(event) {
@@ -45,14 +63,20 @@ export class App extends React.Component{
 
       event.preventDefault();
 
-  }
+      const val = this.state.newTask.trim();
+      let completed = false;
+      if (val) {
+          this.model.addTask({val, completed});
+          this.setState({newTodo: ''});
+      }
+  };
 
   /**
    * Taskを削除したときに呼ばれるリスナー関数
    * @param {{ id: number }}
    */
   handleDelete({ id }) {
-      this.taskListModel.deleteTask({ id });
+      this.model.deleteTask({ id });
   }
 
 //   mount() {
@@ -89,13 +113,29 @@ export class App extends React.Component{
 
   render() {
 
+    const footer = (function(){
+        return (
+            <div>
+                <Link to='/two'>タスクリスト　</Link>
+                <Link to='/'>今日　</Link> 
+                <Link to='/analysis'>分析　</Link>
+            </div>
+        );
+    }());
 
     return (
+        <div>
       <Switch>
         <Route
             path = '/'
             exact = {true}
-            component = {One}
+            render = {()=> <
+                One 
+                test={this.model.test}
+                model={this.model}
+                app={this}
+                state={this.state}
+                /> }
         />
         <Route
             path = '/two'
@@ -106,7 +146,9 @@ export class App extends React.Component{
             component = {Analysis}
         />
        </Switch>
- );
+       {footer}
+       </div>       
+    );
   }
 }
 

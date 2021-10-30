@@ -12,6 +12,7 @@ export class TaskModel {
     this.items = items;
     this.onChanges = [];
     this.l = new LocalForageModel();
+    this.test = "propsを表示することが出来ます。";
 
     items = this.l.toTaskList();
     console.log('tasklistmodel items is ' + items);
