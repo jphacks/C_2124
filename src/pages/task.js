@@ -5,20 +5,22 @@ export class Task extends React.Component{
     render() {
         console.log(this.props.task);
         return (
-            <li>
-                {/* <input type="checkbox" class="checkbox" checked></input> */}
-                <s>{this.props.task.title}</s>
+
+
+            <div class="columns is-mobile">
+            {/* <input type="checkbox" class="checkbox" checked></input> */}
+            　  <div class="card bd-notification is-info">　{this.props.task.title}　
+                </div>
+                <div class="card has-background-primary">　{this.props.task.min} minutes.　</div>
+                <div class="card has-background-warning" >　{this.props.task.mental}　</div>
+                {/* <a class="column">Proceed</a> */}
+
                 <button class="delete">x</button>
-                {this.props.task.title}　
-                {this.props.task.min}分　
-                {this.props.task.mental}
-                
-                {/* <label onDoubleClick={this.handleEdit}>
+                                {/* <label onDoubleClick={this.handleEdit}>
                 { {this.mental}
                 {this.progress} }
                 </label> */}
-                
-            </li>
+　               </div>
             );
 
         //         <li className={classNames({

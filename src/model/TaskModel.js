@@ -20,7 +20,7 @@ export class TaskModel {
     this.dayStacks = DEMO_VALUE;
     this.onChanges = [];
     this.l = new LocalForageModel();
-    this.test = "propsを表示することが出来ます。";
+    this.test = "";
 
     items = this.l.toTaskList();
     console.log('tasklistmodel items is ' + items);

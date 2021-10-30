@@ -47,6 +47,8 @@ class One extends React.Component{
                 <option value="3">気合が欲しい(3)</option>
                 <option value="4">覚悟が必要(4)</option>
               </select>
+              <a class="control">
+              <a class="button has-background-info"><i class="fa fa-search"></i>追加</a></a>
               <div id="js-task-list" className="task-list">
               </div>
               <footer className="footer">
