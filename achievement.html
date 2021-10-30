@@ -17,7 +17,8 @@
 <body>
     <header>達成度実績</header>
 <script>
-    var dataset = [
+    //受け取るデータ
+    var input_dataset = [
     { "date": "211001", "a_percentage": 7, "b_percentage": 10, "c_percentage": 100 },
     { "date": "211002", "a_percentage": 3, "b_percentage": 20, "c_percentage": 90 },
     { "date": "211003", "a_percentage": 4, "b_percentage": 30, "c_percentage": 80 },
@@ -31,6 +32,17 @@
     { "date": "211011", "a_percentage": 14, "b_percentage": 90, "c_percentage": 0 },
     { "date": "211012", "a_percentage": 9, "b_percentage": 80, "c_percentage": 10 },
     ]
+    //データの成形
+    var dataset = []
+    for (let step = Math.max(0,input_dataset.length-10); step < input_dataset.length; step++) {
+        var data = input_dataset[step]
+        if (step==Math.max(0,input_dataset.length-10)||(data.date[4]=='0'&&data.date[5]=='1')){
+            data.date = data.date[2]+data.date[3]+'/'+data.date[4]+data.date[5]
+        }else{
+            data.date = data.date[4]+data.date[5]
+        }
+        dataset.push(data)
+    }
     var width = 900; // グラフの幅
     var height = 600; // グラフの高さ
     var padding = 36; // スペース設定　
