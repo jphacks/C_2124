@@ -21,7 +21,11 @@ export class App extends React.Component{
       this.setState = this.setState.bind(this);
       this.state = {
         editing: null,
-        newTask: ''
+        title: '',
+        completed: false,
+        min: 0,
+        mental: 0,
+        progress: 0,
       }
   }
 
@@ -34,9 +38,9 @@ export class App extends React.Component{
    * Taskを追加するときに呼ばれるリスナー関数
    * @param {string} title
    */
-  handleAdd(title) {
-      this.model.addTask(new TaskItem({ title, completed: false }));
-  }
+//   handleAdd(title) {
+//       this.model.addTask(new TaskItem({ title: title, completed: false }));
+//   }
 
   /**
    * Taskの状態を更新したときに呼ばれるリスナー関数
@@ -50,10 +54,18 @@ export class App extends React.Component{
   /**
    * inputに入力された内容を検知するためのリスナー関数
    */
-  handleChange(event) {
-
-    this.setState({newTask: event.target.value});
+  handleTitleChange(event) {
+    this.setState({title: event.target.value});
   }
+
+  handleMinChange(event) {
+    this.setState({min: event.target.value});
+  }
+
+  handleMentalBarrierChange(event) {
+    this.setState({mental: event.target.value});
+  }
+
 
   handleNewTodoKeyDown(event) {
       if (event.keyCode !== ENTER_KEY) {
@@ -63,10 +75,12 @@ export class App extends React.Component{
 
       event.preventDefault();
 
-      const val = this.state.newTask.trim();
-      let completed = false;
-      if (val) {
-          this.model.addTask({val, completed});
+      const title = this.state.title.trim();
+      const completed = false;
+      const min = this.state.min ? this.state.min : 3;
+      const mental = this.state.mental;
+      if (title) {
+          this.model.addTask({title, completed, min, mental});
           this.setState({newTodo: ''});
       }
   };
@@ -78,38 +92,6 @@ export class App extends React.Component{
   handleDelete({ id }) {
       this.model.deleteTask({ id });
   }
-
-//   mount() {
-//       const formElement = document.querySelector("#js-form");
-//       const inputElement = document.querySelector("#js-form-input");
-//       const taskItemCountElement = document.querySelector("#js-task-count");
-//       const containerElement = document.querySelector("#js-task-list");
-
-//       this.taskListModel.onChange(() => {
-//           const taskItems = this.taskListModel.getTasks();
-//           console.log(taskItems);
-//           const taskListElement = this.taskListView.createElement(taskItems, {
-//               // Appに定義したリスナー関数を呼び出す
-//               onUpdateTask: ({ id, completed }) => {
-//                   this.handleUpdate({ id, completed });
-//               },
-//               onDeleteTask: ({ id }) => {
-//                   this.handleDelete({ id });
-//               }
-//           });
-//           render(taskListElement, containerElement);
-//           taskItemCountElement.textContent = `Taskアイテム数: ${this.taskListModel.getTotalCount()}`;
-//       });
-
-//       formElement.addEventListener("submit", (event) => {
-//           event.preventDefault();
-//           this.handleAdd(inputElement.value);
-//           inputElement.value = "";
-//       });
-
-//       // 最初からローカルに入っていたTodoを反映させる
-//       this.taskListModel.emitChange();
-//   }
 
   render() {
 
@@ -139,11 +121,17 @@ export class App extends React.Component{
         />
         <Route
             path = '/two'
-            component = {Two}
+            render = {()=><
+                Two
+                model={this.model}
+                /> }
         />
         <Route
             path = '/analysis'
-            component = {Analysis}
+            render = {()=><
+                Analysis
+                model={this.model}
+                /> }
         />
        </Switch>
        {footer}

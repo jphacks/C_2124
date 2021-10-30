@@ -1,5 +1,12 @@
 import {LocalForageModel} from "./LocalForageModel.js";
 
+const DEMO_VALUE = 
+[
+  {date:20211001, a_percentage:80, b_percentage:60, c_percentage:90},
+  {date:20211002, a_percentage:95, b_percentage:50, c_percentage:70},
+  {date:20211003, a_percentage:65, b_percentage:80, c_percentage:70},
+];
+
 export class TaskModel {
   /**
    * 
@@ -10,6 +17,7 @@ export class TaskModel {
   constructor(items = []) {
     // super();
     this.items = items;
+    this.dayStacks = DEMO_VALUE;
     this.onChanges = [];
     this.l = new LocalForageModel();
     this.test = "propsを表示することが出来ます。";
@@ -40,6 +48,7 @@ export class TaskModel {
    * @param {Function} listener
    */
   onChange(listener) {
+    
     this.addEventListener("change", listener);
 
   }

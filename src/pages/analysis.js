@@ -8,7 +8,8 @@ class Analysis extends React.Component{
         return (
             <div>
                 test_two<br/>
-                <Link to='/'>oneへee</Link>
+                {this.props.model.test}
+{/* {this.props.model.dayStacks} で参照が出来ます*/}
             </div>
         )
     }
