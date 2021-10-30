@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Achievement</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="achievement_style.css">
     <style>
         header{
             height:200px;
@@ -17,18 +18,18 @@
     <header>達成度実績</header>
 <script>
     var dataset = [
-    { "date": "211001", "a_percentage": 87, "b_percentage": 10, "c_percentage": 100 },
-    { "date": "211002", "a_percentage": 83, "b_percentage": 20, "c_percentage": 90 },
-    { "date": "211003", "a_percentage": 104, "b_percentage": 30, "c_percentage": 80 },
-    { "date": "211004", "a_percentage": 107, "b_percentage": 40, "c_percentage": 70 },
-    { "date": "211005", "a_percentage": 112, "b_percentage": 50, "c_percentage": 60 },
-    { "date": "211006", "a_percentage": 93, "b_percentage": 60, "c_percentage": 50 },
-    { "date": "211007", "a_percentage": 111, "b_percentage": 70, "c_percentage": 40 },
-    { "date": "211008", "a_percentage": 102, "b_percentage": 80, "c_percentage": 30 },
-    { "date": "211009", "a_percentage": 99, "b_percentage": 90, "c_percentage": 20 },
-    { "date": "211010", "a_percentage": 90, "b_percentage": 100, "c_percentage": 10 },
-    { "date": "211011", "a_percentage": 114, "b_percentage": 90, "c_percentage": 0 },
-    { "date": "211012", "a_percentage": 99, "b_percentage": 80, "c_percentage": 10 },
+    { "date": "211001", "a_percentage": 7, "b_percentage": 10, "c_percentage": 100 },
+    { "date": "211002", "a_percentage": 3, "b_percentage": 20, "c_percentage": 90 },
+    { "date": "211003", "a_percentage": 4, "b_percentage": 30, "c_percentage": 80 },
+    { "date": "211004", "a_percentage": 7, "b_percentage": 40, "c_percentage": 70 },
+    { "date": "211005", "a_percentage": 2, "b_percentage": 50, "c_percentage": 60 },
+    { "date": "211006", "a_percentage": 3, "b_percentage": 60, "c_percentage": 50 },
+    { "date": "211007", "a_percentage": 11, "b_percentage": 70, "c_percentage": 40 },
+    { "date": "211008", "a_percentage": 2, "b_percentage": 80, "c_percentage": 30 },
+    { "date": "211009", "a_percentage": 9, "b_percentage": 90, "c_percentage": 20 },
+    { "date": "211010", "a_percentage": 0, "b_percentage": 100, "c_percentage": 10 },
+    { "date": "211011", "a_percentage": 14, "b_percentage": 90, "c_percentage": 0 },
+    { "date": "211012", "a_percentage": 9, "b_percentage": 80, "c_percentage": 10 },
     ]
     var width = 900; // グラフの幅
     var height = 600; // グラフの高さ
@@ -44,18 +45,21 @@
                     .domain(dataset.map(function(d) { return d.date; }));
 
     var yScale = d3.scaleLinear()
-                    .domain([0, d3.max(dataset, function(d) { return d.a_percentage; })])
+                    .domain([0, d3.max(dataset, function(d) { return 100; })])
                     .range([height - padding, padding]);
 
     // 軸の描画
     svg.append("g")
         .attr("transform", "translate(" + 0 + "," + (height - padding) + ")")
-        .call(d3.axisBottom(xScale));
+        .call(d3.axisBottom(xScale).tickSizeInner(0))
+        .attr("class", "x-axis");
 
     svg.append("g")
         .attr("transform", "translate(" + padding + "," + 0 + ")")
-        .call(d3.axisLeft(yScale));
-    //凡例
+        .call(d3.axisLeft(yScale).tickSizeInner(-width+padding*2))
+        .attr("class", "y-axis");
+        
+    //凡例の準備
     const legend = svg.append("g")
                     .attr("class", "legend")
                     .attr("transform", "translate(10, 10)");
