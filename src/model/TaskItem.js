@@ -2,6 +2,8 @@ export class TaskItem {
     // ユニークなIDを管理する変数
     static taskIdx = 0;
 
+
+
     /**
      * @param {string} title Taskアイテムのタイトル
      * @param {boolean} completed Taskアイテムが完了済みならばtrue、そうでない場合はfalse
@@ -13,7 +15,9 @@ export class TaskItem {
         this.completed = completed;
         this.min = min;
         this.mental = mental;
-        this.progress = progress;
+        this.progress = isNaN(progress) ? 0 : progress;
+        this.MAX_PROGRESS = 100;
+        this.INC_PROGRESS = 25;
     }
 
 }

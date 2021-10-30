@@ -1,0 +1,11 @@
+.y-axis {
+    fill: none;
+    opacity: 0.5;
+    font-size: 15px;
+    stroke-width: 1px;
+}
+.x-axis{
+    stroke-opacity:0;
+    opacity: 0.5;
+    font-size: 15px;
+}
